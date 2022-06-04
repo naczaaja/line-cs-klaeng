@@ -8,21 +8,23 @@
 .v-application {
   font-family: 'Prompt', sans-serif;
 }
+
 .v-toolbar__title {
   text-align: center;
   width: 100%;
   font-weight: bold;
 }
-.v-application .primary{
+
+.v-application .primary {
   background-color: #3c1361 !important;
   border-color: #3c1361 !important;
 }
 
-.text-primary{
+.text-primary {
   color: #3c1361;
 }
 
-.text-title{
+.text-title {
   font-size: 20px;
   font-weight: bold;
 }
@@ -32,7 +34,7 @@
   caret-color: #3c1361 !important;
 }
 
-.w-100{
+.w-100 {
   width: 100%;
 }
 </style>

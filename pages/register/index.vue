@@ -25,6 +25,12 @@
             <!-- Lastname input -->
             <v-text-field v-model="form.lastname" dense label="สกุล" required>
             </v-text-field>
+            <!-- Firstname input -->
+            <v-text-field v-model="form.email" dense label="อีเมล">
+            </v-text-field>
+            <!-- Firstname input -->
+            <v-text-field v-model="form.telephone" dense label="เบอร์โทรศัพท์" required>
+            </v-text-field>
             <!-- gender field -->
             <div class="gender-group d-flex mt-3">
               <p>เพศ</p>
@@ -45,16 +51,27 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="dialog" max-width="290">
+      <v-card>
+        <v-card-title class="warningPopup">แจ้งเตือน</v-card-title>
+        <v-card-text v-html="errorMsg">
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
+  data: () => {
     return {
+      dialog: false,
+      errorMsg: '',
       form: {
         firstname: '',
         lastname: '',
+        email: '',
+        telephone: '',
         gender: 1
       }
     }
@@ -63,8 +80,31 @@ export default {
     chooseGender(gender) {
       this.form.gender = gender
     },
-    next(){
-      this.$router.push('/register/step2')
+    // ตรวจสอบค่าว่างใน input
+    validate() {
+      let validated = true
+      const errors = []
+      const validatorField = [
+        'firstname',
+        'lastname',
+        'telephone'
+      ]
+      validatorField.forEach((field) => {
+        if (this.form[field] == '') {
+          validated = false
+          errors.push(`คุณยังไม่ได้กรอก ${field}`)
+        }
+      })
+      if (!validated) {
+        this.errorMsg = errors.map((error) => error + '<br/>').join('')
+        this.dialog = true
+      }
+      return validated
+    },
+    next() {
+      if (this.validate()) {
+        this.$router.push('/register/step2')
+      }
     }
   },
 }
@@ -118,6 +158,11 @@ export default {
   text-transform: none;
   height: auto !important;
   padding: 10px 0 !important;
+  font-weight: bold;
+}
+
+.warningPopup {
+  color: red;
   font-weight: bold;
 }
 </style>
