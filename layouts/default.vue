@@ -1,8 +1,19 @@
 <template>
   <v-app>
     <nuxt />
+    <Dialog />
   </v-app>
 </template>
+
+<!-- เพิ่ม component -->
+<script>
+import Dialog from '~/components/Dialog.vue';
+export default {
+  components: {
+    Dialog
+  }
+}
+</script>
 
 <style lang="scss">
 .v-application {

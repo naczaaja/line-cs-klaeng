@@ -51,13 +51,6 @@
         </v-col>
       </v-row>
     </v-container>
-    <v-dialog v-model="dialog" max-width="290">
-      <v-card>
-        <v-card-title class="warningPopup">แจ้งเตือน</v-card-title>
-        <v-card-text v-html="errorMsg">
-        </v-card-text>
-      </v-card>
-    </v-dialog>
   </div>
 </template>
 
@@ -65,8 +58,6 @@
 export default {
   data: () => {
     return {
-      dialog: false,
-      errorMsg: '',
       form: {
         firstname: '',
         lastname: '',
@@ -96,13 +87,17 @@ export default {
         }
       })
       if (!validated) {
-        this.errorMsg = errors.map((error) => error + '<br/>').join('')
-        this.dialog = true
+        this.$store.dispatch('setDialog', {
+          isShow: true,
+          title: 'แจ้งเตือน',
+          message: errors.map((error) => error + '<br/>').join('')
+        })
       }
       return validated
     },
     next() {
       if (this.validate()) {
+        this.$store.dispatch('setRegister', this.form)
         this.$router.push('/register/step2')
       }
     }
